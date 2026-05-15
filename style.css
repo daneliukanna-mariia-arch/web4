@@ -198,7 +198,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 /* ===================== NEWS ===================== */
@@ -379,60 +379,311 @@ body {
     cursor: not-allowed;
 }
 
-/* ===================== MODALS ===================== */
+/* ===================== MODAL ===================== */
 
 .modal {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.2s ease;
+}
+
+.modal.hidden {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-content {
     background: white;
     padding: 35px;
     border-radius: 20px;
-    width: 350px;
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Кнопка закриття */
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: #888;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #111;
+}
+
+/* Заголовок модалки */
+.modal-header {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.modal-title {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #111;
+}
+
+.modal-subtitle {
+    font-size: 14px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* Вкладки */
+.modal-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #111;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 11px;
+    cursor: pointer;
+    border: none;
+    background: white;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tab-btn.active {
+    background: #111;
+    color: white;
+}
+
+.tab-btn:hover:not(.active) {
+    background: #f0f0f0;
+}
+
+/* Форма */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.form-group input {
+    padding: 12px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+.form-group input:focus {
+    border-color: #111;
+    box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.1);
+}
+
+/* Обгортка з кнопкою "показати пароль" */
+.input-wrapper {
     position: relative;
 }
 
-.modal-content h2,
-.modal-content h3 {
-    margin-bottom: 20px;
+.input-wrapper input {
+    padding-right: 44px;
 }
 
-.modal-content input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    color: #888;
+    transition: color 0.2s;
 }
 
-.modal-content button {
+.toggle-password:hover {
+    color: #111;
+}
+
+/* Стан помилки */
+.form-group input.input-error {
+    border-color: #e53e3e;
+    background: #fff5f5;
+}
+
+.error-text {
+    font-size: 12px;
+    color: #e53e3e;
+    min-height: 18px;
+    margin-top: 4px;
+}
+
+/* Обов'язкове поле */
+.required {
+    color: #e53e3e;
+}
+
+.required-note {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+/* Індикатор сили пароля */
+.password-strength {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.strength-bar {
+    flex: 1;
+    height: 5px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.strength-fill {
+    display: block;
+    height: 100%;
+    width: 0%;
+    border-radius: 4px;
+    transition: width 0.3s, background 0.3s;
+}
+
+.strength-fill.weak {
+    width: 33%;
+    background: #e53e3e;
+}
+
+.strength-fill.medium {
+    width: 66%;
+    background: #f6ad55;
+}
+
+.strength-fill.strong {
     width: 100%;
-    padding: 12px;
+    background: #38a169;
+}
+
+.strength-label {
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 50px;
+}
+
+.strength-label.weak {
+    color: #e53e3e;
+}
+
+.strength-label.medium {
+    color: #f6ad55;
+}
+
+.strength-label.strong {
+    color: #38a169;
+}
+
+/* Кнопка відправки */
+.submit-btn {
+    width: 100%;
+    padding: 13px;
     border: none;
     border-radius: 10px;
     background: #111;
     color: white;
+    font-size: 15px;
+    font-weight: 700;
     cursor: pointer;
+    margin-top: 6px;
+    transition: opacity 0.2s, transform 0.1s;
 }
 
-.close {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 24px;
-    cursor: pointer;
+.submit-btn:hover {
+    opacity: 0.88;
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+/* Order modal */
+#orderModal .modal-content h2 {
+    margin-bottom: 16px;
+}
+
+#orderModal .modal-content {
+    text-align: center;
+}
+
+#orderInfo {
+    margin-bottom: 20px;
+    text-align: left;
 }
 
 /* ===================== RESPONSIVE ===================== */
 
-@media(max-width:768px) {
+@media (max-width: 768px) {
 
     .navbar {
         flex-direction: column;
@@ -456,81 +707,104 @@ body {
         width: 100%;
     }
 
+    .modal-content {
+        padding: 24px 20px;
+    }
 }
 
-.hidden {
-    display: none !important;
-}
+/* ===================== TOAST ===================== */
 
-/* Фонова підкладка */
-.modal {
+.toast {
     position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    /* Темний фон */
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #111;
+    color: white;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
     display: flex;
     align-items: center;
-    justify-content: center;
-}
-
-.modal.hidden {
-    display: none;
-}
-
-/* Контентне вікно */
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 400px;
-    position: relative;
-}
-
-.modal-tabs {
-    display: flex;
     gap: 10px;
-    margin-bottom: 20px;
+    z-index: 9999;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    white-space: nowrap;
 }
 
-.tab-btn {
-    flex: 1;
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    background: #f0f0f0;
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
-.tab-btn.active {
-    background: #222;
-    color: white;
+.toast.toast--success {
+    background: #276749;
 }
 
-.auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.toast.toast--error {
+    background: #9b2c2c;
 }
 
-.auth-form input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.toast.toast--info {
+    background: #2b4c8c;
 }
 
-.submit-btn {
-    padding: 12px;
-    background: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
+/* ===================== FORM BANNER ===================== */
 
-.error-msg {
-    color: red;
+.form-banner {
+    padding: 12px 16px;
+    border-radius: 10px;
     font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.form-banner--error {
+    background: #fff5f5;
+    border: 1.5px solid #fc8181;
+    color: #c53030;
+}
+
+.form-banner--success {
+    background: #f0fff4;
+    border: 1.5px solid #68d391;
+    color: #276749;
+}
+
+/* ===================== CART AUTH NOTICE ===================== */
+
+.cart-auth-notice {
+    background: #fffbeb;
+    border: 1.5px solid #f6ad55;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.cart-auth-notice p {
+    font-size: 14px;
+    color: #744210;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.cart-login-btn {
+    padding: 10px 20px;
+    background: #111;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.cart-login-btn:hover {
+    opacity: 0.85;
 }
