@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Shop | DOM & BOM</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <nav class="navbar">
+        <div class="logo">PhoneHub</div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Пошук моделі...">
+        </div>
+
+        <div class="nav-actions">
+            <button id="authBtn">Увійти</button>
+
+            <div class="cart-icon" id="cartTrigger">
+                🛒 <span id="cartCount">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FILTERS -->
+    <section class="controls">
+
+        <div class="filter-panel">
+
+            <select id="categoryFilter">
+                <option value="all">Усі категорії</option>
+                <option value="android">Android</option>
+                <option value="iphone">iPhone</option>
+            </select>
+
+            <input type="number" id="minPrice" placeholder="Ціна від">
+
+            <input type="number" id="maxPrice" placeholder="Ціна до">
+
+            <button id="applyFiltersBtn">Застосувати</button>
+
+        </div>
+
+        <div class="sort-panel">
+            <select id="sortSelect">
+                <option value="default">Сортувати за...</option>
+                <option value="name">Назвою (А-Я)</option>
+                <option value="priceAsc">Ціна (нижча → вища)</option>
+                <option value="priceDesc">Ціна (вища → нижча)</option>
+            </select>
+        </div>
+
+    </section>
+
+    <!-- PRODUCTS -->
+    <main id="productGrid" class="product-grid"></main>
+
+    <!-- NEWS -->
+    <section class="news-section">
+
+        <h2>Новини фірми</h2>
+
+        <div class="news-container">
+
+            <aside class="news-sidebar" id="newsTitles"></aside>
+
+            <main class="news-content" id="newsContent">
+                <p>Оберіть новину для перегляду</p>
+            </main>
+
+        </div>
+
+        <button id="loadMoreNewsBtn" class="more-btn">
+            Більше
+        </button>
+
+    </section>
+
+    <!-- CHARTS -->
+    <section class="charts-section">
+
+        <h2>Статистика товарів</h2>
+
+        <select id="chartType">
+            <option value="bar">Гістограма</option>
+            <option value="pie">Кругова діаграма</option>
+            <option value="line">Лінійний графік</option>
+        </select>
+
+        <div class="chart-wrapper">
+            <canvas id="chartCanvas" width="600" height="400"></canvas>
+        </div>
+
+    </section>
+
+    <!-- CART -->
+    <div id="cart" class="cart hidden">
+
+        <h3>
+            Кошик
+            <span id="closeCart">✖️</span>
+        </h3>
+
+        <ul id="cartItems"></ul>
+
+        <p id="cartTotal">Разом: 0 грн</p>
+
+        <button id="checkoutBtn">
+            Відправити замовлення
+        </button>
+
+    </div>
+
+    <!-- AUTH MODAL -->
+    <div id="authModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" id="closeAuthModal">&times;</span>
+    
+            <!-- Заголовки для перемикання -->
+            <div class="modal-tabs">
+                <button id="showLogin" class="tab-btn active">Вхід</button>
+                <button id="showRegister" class="tab-btn">Реєстрація</button>
+            </div>
+    
+            <!-- Форма входу -->
+            <form id="loginForm" class="auth-form">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Пароль" required>
+                <button type="submit" class="submit-btn">Увійти</button>
+            </form>
+    
+            <!-- Форма реєстрації (прихована за замовчуванням) -->
+            <form id="registerForm" class="auth-form hidden">
+                <input type="text" id="regLogin" placeholder="Логін" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" id="regPass" placeholder="Пароль" required>
+                <input type="password" id="regPassConfirm" placeholder="Повторіть пароль" required>
+                <p id="regError" class="error-msg hidden">Паролі не збігаються!</p>
+                <button type="submit" class="submit-btn">Зареєструватися</button>
+            </form>
+        </div>
+    </div>
+
+
+    </div>
+
+    <!-- ORDER MODAL -->
+    <div id="orderModal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <span class="close" id="closeOrderModal">
+                &times;
+            </span>
+
+            <h2>Замовлення прийнято!</h2>
+
+            <div id="orderInfo"></div>
+
+            <button id="orderOkBtn">
+                Зрозуміло
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
